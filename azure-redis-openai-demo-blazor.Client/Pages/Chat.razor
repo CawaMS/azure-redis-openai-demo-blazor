@@ -29,12 +29,23 @@
     }
 </ul>
 
+@if (showSpinner)
+{
+    <div class="spinner-border" role="status">
+        <span class="visually-hidden">
+            <BlazorBootstrap.Spinner />
+            Loading...
+        </span>
+    </div>
+}
+
 @code {
     private HubConnection? hubConnection;
     private List<string> messages = [];
     private string? userInput;
     private string? messageInput;
     private string? tempMessage;
+    bool showSpinner = false;
 
     protected override async Task OnInitializedAsync()
     {
@@ -46,6 +57,13 @@
         {
             var encodedMsg = $"{user}: {message}";
             messages.Add(encodedMsg);
+            if (user != "AI Assistant")
+            {
+                showSpinner = true;
+            }
+            else { 
+                showSpinner = false;
+            }
             InvokeAsync(StateHasChanged);
         });
 

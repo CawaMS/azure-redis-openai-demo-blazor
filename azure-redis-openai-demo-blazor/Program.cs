@@ -19,6 +19,8 @@ builder.Services.AddResponseCompression(opts =>
 
 builder.Services.AddSingleton<ChatAgent>();
 
+builder.Services.AddBlazorBootstrap();
+
 var app = builder.Build();
 
 app.UseResponseCompression();
