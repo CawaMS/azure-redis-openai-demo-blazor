@@ -1,0 +1,51 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35707.178 d17.12
+MinimumVisualStudioVersion = 16.0.0.0
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "azure-redis-openai-demo-blazor", "azure-redis-openai-demo-blazor\azure-redis-openai-demo-blazor.csproj", "{41628808-AABE-48FA-96B5-AB424A47083A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "azure-redis-openai-demo-blazor.Client", "azure-redis-openai-demo-blazor.Client\azure-redis-openai-demo-blazor.Client.csproj", "{823D5C52-DCD9-42D2-B0C9-42628E5802A5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{41628808-AABE-48FA-96B5-AB424A47083A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41628808-AABE-48FA-96B5-AB424A47083A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41628808-AABE-48FA-96B5-AB424A47083A}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{41628808-AABE-48FA-96B5-AB424A47083A}.Debug|x64.Build.0 = Debug|Any CPU
+		{41628808-AABE-48FA-96B5-AB424A47083A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{41628808-AABE-48FA-96B5-AB424A47083A}.Debug|x86.Build.0 = Debug|Any CPU
+		{41628808-AABE-48FA-96B5-AB424A47083A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41628808-AABE-48FA-96B5-AB424A47083A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41628808-AABE-48FA-96B5-AB424A47083A}.Release|x64.ActiveCfg = Release|Any CPU
+		{41628808-AABE-48FA-96B5-AB424A47083A}.Release|x64.Build.0 = Release|Any CPU
+		{41628808-AABE-48FA-96B5-AB424A47083A}.Release|x86.ActiveCfg = Release|Any CPU
+		{41628808-AABE-48FA-96B5-AB424A47083A}.Release|x86.Build.0 = Release|Any CPU
+		{823D5C52-DCD9-42D2-B0C9-42628E5802A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{823D5C52-DCD9-42D2-B0C9-42628E5802A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{823D5C52-DCD9-42D2-B0C9-42628E5802A5}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{823D5C52-DCD9-42D2-B0C9-42628E5802A5}.Debug|x64.Build.0 = Debug|Any CPU
+		{823D5C52-DCD9-42D2-B0C9-42628E5802A5}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{823D5C52-DCD9-42D2-B0C9-42628E5802A5}.Debug|x86.Build.0 = Debug|Any CPU
+		{823D5C52-DCD9-42D2-B0C9-42628E5802A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{823D5C52-DCD9-42D2-B0C9-42628E5802A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{823D5C52-DCD9-42D2-B0C9-42628E5802A5}.Release|x64.ActiveCfg = Release|Any CPU
+		{823D5C52-DCD9-42D2-B0C9-42628E5802A5}.Release|x64.Build.0 = Release|Any CPU
+		{823D5C52-DCD9-42D2-B0C9-42628E5802A5}.Release|x86.ActiveCfg = Release|Any CPU
+		{823D5C52-DCD9-42D2-B0C9-42628E5802A5}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6F691E36-2135-495D-91E7-40C22890C496}
+	EndGlobalSection
+EndGlobal

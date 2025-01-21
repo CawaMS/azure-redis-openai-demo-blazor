@@ -1,0 +1,9 @@
+.vs
+azure-redis-openai-demo-blazor/bin
+azure-redis-openai-demo-blazor/bin/*
+azure-redis-openai-demo-blazor/obj
+azure-redis-openai-demo-blazor/obj/*
+azure-redis-openai-demo-blazor.Client/bin
+azure-redis-openai-demo-blazor.Client/bin/*
+azure-redis-openai-demo-blazor.Client/obj
+azure-redis-openai-demo-blazor.Client/obj/*
