@@ -2,5 +2,6 @@
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ActiveDebugProfile>https</ActiveDebugProfile>
+    <NameOfLastUsedPublishProfile>C:\Users\cawa\source\repos\azure-redis-openai-demo-blazor_newUI\azure-redis-openai-demo-blazor\Properties\PublishProfiles\azure-redis-openai-demo-blazor20250124204721 - Zip Deploy.pubxml</NameOfLastUsedPublishProfile>
   </PropertyGroup>
 </Project>

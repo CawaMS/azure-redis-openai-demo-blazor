@@ -25,11 +25,11 @@ public class ChatAgent
 
     public async Task<string> CompleteChat(string userInput)
     {
-        string AOAI_deploymentName = config["AOAI:deploymentName"] ?? "";
-        string AOAI_endPoint = config["AOAI:endPoint"] ?? "";
-        string AOAI_apiKey = config["AOAI:apiKey"] ?? "";
-        string AOAI_embeddingDeploymentName = config["AOAI:embeddingDeploymentName"] ?? "";
-        string REDIS_connectionString = config["REDIS:connectionString"] ?? "";
+        string AOAI_deploymentName = config["AOAIdeploymentName"] ?? "";
+        string AOAI_endPoint = config["AOAIendPoint"] ?? "";
+        string AOAI_apiKey = config["AOAIapiKey"] ?? "";
+        string AOAI_embeddingDeploymentName = config["AOAIembeddingDeploymentName"] ?? "";
+        string REDIS_connectionString = config["REDISconnectionString"] ?? "";
 
         var builder = Kernel
                         .CreateBuilder()

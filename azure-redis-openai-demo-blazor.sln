@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35707.178 d17.12
+VisualStudioVersion = 17.12.35707.178
 MinimumVisualStudioVersion = 16.0.0.0
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "azure-redis-openai-demo-blazor", "azure-redis-openai-demo-blazor\azure-redis-openai-demo-blazor.csproj", "{41628808-AABE-48FA-96B5-AB424A47083A}"
 EndProject

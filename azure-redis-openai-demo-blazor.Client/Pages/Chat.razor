@@ -1,23 +1,24 @@
 ﻿@page "/chat"
-@rendermode InteractiveWebAssembly
 @using Microsoft.AspNetCore.SignalR.Client
 @inject NavigationManager Navigation
 @implements IAsyncDisposable
 
 <PageTitle>Chat</PageTitle>
 
-<div class="form-group">
-    <label>
+<div class="form-group row mb-2">
+    <label class="col-md-10 col-form-label">
         User:
-        <input @bind="userInput" />
+        <InputText class="form-control" @bind-value="userInput" />
     </label>
 </div>
-<div class="form-group">
-    <label>
+<br/>
+<div class="form-group row mb-2">
+    <label class="col-md-10 col-form-label">
         Message:
-        <input @bind="messageInput" size="50" />
+        <InputTextArea class="form-control" @bind-value="messageInput" size="200" />
     </label>
 </div>
+<br/>
 <button @onclick="Send" disabled="@(!IsConnected)">Send</button>
 
 <hr>
