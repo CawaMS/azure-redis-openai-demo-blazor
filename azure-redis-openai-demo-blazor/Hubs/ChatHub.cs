@@ -6,12 +6,12 @@ public class ChatHub : Hub
 {
     public async Task SendMessage(string user, string message)
     {
-        await Clients.All.SendAsync("ReceiveMessage", user, message);
+        await Clients.Caller.SendAsync("ReceiveMessage", user, message);
     }
 
     public async Task SendOpenaiMessage(string message, ChatAgent chatAgent)
     { 
         string response = await chatAgent.CompleteChat(message);
-        await Clients.All.SendAsync("ReceiveMessage", "AI Assistant", response);
+        await Clients.Caller.SendAsync("ReceiveMessage", "AI Assistant", response);
     }
 }
