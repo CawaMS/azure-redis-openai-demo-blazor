@@ -1,0 +1,58 @@
+﻿@page "/file-upload"
+@using Azure.Storage.Blobs
+@using Azure.Identity
+@inject IConfiguration Configuration
+
+<h3>File Upload</h3>
+
+<InputFile OnChange="HandleFileSelected" />
+
+@if (uploading)
+{
+    <p>Uploading...</p>
+}
+
+@if (!string.IsNullOrEmpty(uploadResult))
+{
+    <p>@uploadResult</p>
+}
+
+@code {
+    private bool uploading = false;
+    private string uploadResult;
+
+    private async Task HandleFileSelected(InputFileChangeEventArgs e)
+    {
+        var file = e.File;
+        if (file != null)
+        {
+            uploading = true;
+            uploadResult = string.Empty;
+
+            try
+            {
+                var connectionString = Configuration["AzureStorageConnectionString"];
+                var containerName = Configuration["AzureStorageContainerName"];
+                var blobServiceClient = new BlobServiceClient(new Uri(connectionString), new DefaultAzureCredential());
+                var containerClient = blobServiceClient.GetBlobContainerClient(containerName);
+
+                var blobClient = containerClient.GetBlobClient(file.Name);
+
+                using (var stream = file.OpenReadStream())
+                {
+                    await blobClient.UploadAsync(stream, true);
+                }
+
+                uploadResult = "File uploaded successfully!";
+            }
+            catch (Exception ex)
+            {
+                uploadResult = $"Error uploading file: {ex.Message}";
+            }
+            finally
+            {
+                uploading = false;
+            }
+        }
+    }
+   }

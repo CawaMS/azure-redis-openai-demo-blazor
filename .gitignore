@@ -7,9 +7,15 @@ azure-redis-openai-demo-blazor.Client/bin
 azure-redis-openai-demo-blazor.Client/bin/*
 azure-redis-openai-demo-blazor.Client/obj
 azure-redis-openai-demo-blazor.Client/obj/*
+azure-redis-openai-demo-blazor.Client/Properties
+azure-redis-openai-demo-blazor.Client/Properties/*
 azure-redis-openai-demo-blazor/Properties
 azure-redis-openai-demo-blazor/Properties/*
 azure-redis-openai-demo-blazor/Properties/PublishProfiles
 azure-redis-openai-demo-blazor/Properties/PublishProfiles/
 azure-redis-openai-demo-blazor/azure-redis-openai-demo-blazor.csproj.user
 azure-redis-openai-demo-blazor/azure-redis-openai-demo-blazor.csproj.*
+generate-embeddings/Properties
+generate-embeddings/Properties/*
+generate-embeddings/Properties/PublishProfiles
+generate-embeddings/Properties/PublishProfiles/

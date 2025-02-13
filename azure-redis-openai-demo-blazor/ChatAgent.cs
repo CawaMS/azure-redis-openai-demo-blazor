@@ -15,54 +15,12 @@ using StackExchange.Redis;
 #pragma warning disable SKEXP0052
 #pragma warning disable SKEXP0050
 
-public class ChatAgent
+public class ChatAgent(Kernel kernel, KernelPlugin memory, IChatCompletionService chatCompletionService, ITextEmbeddingGenerationService embeddingService, IConfiguration config)
 {
-    IConfiguration config;
-    public ChatAgent(IConfiguration _config)
-    {
-        config = _config;
-    }
 
     public async Task<string> CompleteChat(string userInput)
     {
-        string AOAI_deploymentName = config["AOAIdeploymentName"] ?? "";
-        string AOAI_endPoint = config["AOAIendPoint"] ?? "";
-        string AOAI_apiKey = config["AOAIapiKey"] ?? "";
-        string AOAI_embeddingDeploymentName = config["AOAIembeddingDeploymentName"] ?? "";
-        string REDIS_connectionString = config["REDISconnectionString"] ?? "";
-
-        var builder = Kernel
-                        .CreateBuilder()
-                        .AddAzureOpenAITextEmbeddingGeneration(AOAI_embeddingDeploymentName, AOAI_endPoint, AOAI_apiKey)
-                        .AddAzureOpenAIChatCompletion(AOAI_deploymentName, AOAI_endPoint, AOAI_apiKey);
-
-        // Add Enterprise components
-        builder.Services.AddLogging();
-
-        // Build the kernel
-        Kernel kernel = builder.Build();
-
-        var chatCompletionService = kernel.GetRequiredService<IChatCompletionService>();
-        // Retrieve the embedding service from the Kernel.
-        ITextEmbeddingGenerationService embeddingService = kernel.Services.GetRequiredService<ITextEmbeddingGenerationService>();
-
-        // Initialize a memory store using the redis database
-        ConnectionMultiplexer connection = ConnectionMultiplexer.Connect(REDIS_connectionString);
-        IDatabase _db = connection.GetDatabase();
-        RedisMemoryStore memoryStore = new RedisMemoryStore(_db);
-
-        // Initialize a SemanticTextMemory using the memory store and embedding generation service.
-        SemanticTextMemory textMemory = new(memoryStore, embeddingService);
-
-        // Initialize a TextMemoryPlugin using the text memory.
-        TextMemoryPlugin memoryPlugin = new(textMemory);
-
-        // Import the text memory plugin into the Kernel.
-        KernelPlugin memory = kernel.ImportPluginFromObject(memoryPlugin);
-
-        // Create a history store the conversation
-        //TODO: add user and session
-        //TODO: move the chat history to Redis
+       
         var history = new ChatHistory(); 
 
         if (userInput is not null)
@@ -72,8 +30,9 @@ public class ChatAgent
                 memory["Recall"],
                 new()
                 {
+                    // TODO: make these configurable or dynamic
                     [TextMemoryPlugin.InputParam] = "Ask: "+userInput,
-                    [TextMemoryPlugin.CollectionParam] = "sk-documentation2", // TODO: make this configurable or dynamic
+                    [TextMemoryPlugin.CollectionParam] = "sk-documentation2", 
                     [TextMemoryPlugin.LimitParam] = 2,
                     [TextMemoryPlugin.RelevanceParam] = 0.5
                 }
