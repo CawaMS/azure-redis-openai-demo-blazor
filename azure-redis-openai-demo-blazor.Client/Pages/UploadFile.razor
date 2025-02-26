@@ -5,7 +5,7 @@
 
 <h3>File Upload</h3>
 
-<InputFile OnChange="HandleFileSelected" />
+<InputFile OnChange="@HandleFileSelected" />
 
 @if (uploading)
 {
@@ -17,9 +17,27 @@
     <p>@uploadResult</p>
 }
 
+<p>DefaultCredInfo: @DefaultCredInfo</p>
+<p>BlobEndpointURL: @BlobEndpointURL</p>
+
 @code {
+
+
+
+
+
+
+
     private bool uploading = false;
     private string uploadResult;
+
+
+
+    private string BlobEndpointURL="";
+
+
+
+    private string DefaultCredInfo="";
 
     private async Task HandleFileSelected(InputFileChangeEventArgs e)
     {
@@ -31,10 +49,28 @@
 
             try
             {
-                var connectionString = Configuration["AzureStorageConnectionString"];
+                var connectionString = new Uri(Configuration["AzureStorageConnectionString"]);
                 var containerName = Configuration["AzureStorageContainerName"];
-                var blobServiceClient = new BlobServiceClient(new Uri(connectionString), new DefaultAzureCredential());
+
+                if (connectionString == null || string.IsNullOrEmpty(containerName))
+                {
+                    uploadResult = "Error uploading file: AzureStorageConnectionString or AzureStorageContainerName is not set in the configuration.";
+                    // throw new ArgumentNullException("AzureStorageConnectionString or AzureStorageContainerName is not set in the configuration.");
+                }
+
+                var blobServiceClient = new BlobServiceClient(connectionString, new DefaultAzureCredential());
                 var containerClient = blobServiceClient.GetBlobContainerClient(containerName);
+
+                BlobEndpointURL = blobServiceClient.Uri.ToString();
+
+                // var credential = new DefaultAzureCredential();
+
+                // string[] scopes = new string[] { "https://graph.microsoft.com/.default" };
+                // var token = await credential.GetTokenAsync(new Azure.Core.TokenRequestContext(scopes));
+
+
+
+                // DefaultCredInfo = token.Token;
 
                 var blobClient = containerClient.GetBlobClient(file.Name);
 
