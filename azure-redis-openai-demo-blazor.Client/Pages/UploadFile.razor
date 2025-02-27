@@ -17,17 +17,7 @@
     <p>@uploadResult</p>
 }
 
-<p>DefaultCredInfo: @DefaultCredInfo</p>
-<p>BlobEndpointURL: @BlobEndpointURL</p>
-
 @code {
-
-
-
-
-
-
-
     private bool uploading = false;
     private string uploadResult;
 
@@ -58,17 +48,24 @@
                     // throw new ArgumentNullException("AzureStorageConnectionString or AzureStorageContainerName is not set in the configuration.");
                 }
 
+                // var credential = new DefaultAzureCredential();
+
+                // string[] scopes = new string[] { "https://graph.microsoft.com/.default" };
+
+                // try
+                // {
+                //     var token = await credential.GetTokenAsync(new Azure.Core.TokenRequestContext(scopes));
+                //     DefaultCredInfo = token.Token;
+                // }
+                // catch (Exception ex)
+                // {
+                //     DefaultCredInfo = "Default Credential failure: " + ex.Message;
+                // }
+
                 var blobServiceClient = new BlobServiceClient(connectionString, new DefaultAzureCredential());
                 var containerClient = blobServiceClient.GetBlobContainerClient(containerName);
 
                 BlobEndpointURL = blobServiceClient.Uri.ToString();
-
-                // var credential = new DefaultAzureCredential();
-
-                // string[] scopes = new string[] { "https://graph.microsoft.com/.default" };
-                // var token = await credential.GetTokenAsync(new Azure.Core.TokenRequestContext(scopes));
-
-
 
                 // DefaultCredInfo = token.Token;
 

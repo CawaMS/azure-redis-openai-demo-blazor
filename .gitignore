@@ -19,3 +19,4 @@ generate-embeddings/Properties
 generate-embeddings/Properties/*
 generate-embeddings/Properties/PublishProfiles
 generate-embeddings/Properties/PublishProfiles/
+.azure
