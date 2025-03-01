@@ -15,7 +15,7 @@ using StackExchange.Redis;
 #pragma warning disable SKEXP0052
 #pragma warning disable SKEXP0050
 
-public class ChatAgent(Kernel kernel, KernelPlugin memory, IChatCompletionService chatCompletionService, ITextEmbeddingGenerationService embeddingService, IConfiguration config)
+public class ChatAgent(Kernel kernel, KernelPlugin memory, IChatCompletionService chatCompletionService, ITextEmbeddingGenerationService embeddingService,IConnectionMultiplexer connectionMultiplexer, IConfiguration config)
 {
 
     public async Task<string> CompleteChat(string userInput)

@@ -2,6 +2,7 @@
 @using Azure.Storage.Blobs
 @using Azure.Identity
 @inject IConfiguration Configuration
+@inject BlobContainerClient blobContainerClient
 
 <h3>File Upload</h3>
 
@@ -62,14 +63,16 @@
                 //     DefaultCredInfo = "Default Credential failure: " + ex.Message;
                 // }
 
-                var blobServiceClient = new BlobServiceClient(connectionString, new DefaultAzureCredential());
-                var containerClient = blobServiceClient.GetBlobContainerClient(containerName);
+                // var blobServiceClient = new BlobServiceClient(connectionString, new DefaultAzureCredential());
+                // var containerClient = blobServiceClient.GetBlobContainerClient(containerName);
 
-                BlobEndpointURL = blobServiceClient.Uri.ToString();
+                // BlobEndpointURL = blobServiceClient.Uri.ToString();
 
                 // DefaultCredInfo = token.Token;
 
-                var blobClient = containerClient.GetBlobClient(file.Name);
+                // var blobClient = containerClient.GetBlobClient(file.Name);
+
+                var blobClient = blobContainerClient.GetBlobClient(file.Name);
 
                 using (var stream = file.OpenReadStream())
                 {

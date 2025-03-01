@@ -9,6 +9,8 @@ using Microsoft.SemanticKernel.Memory;
 using Microsoft.SemanticKernel.Plugins.Memory;
 using Microsoft.SemanticKernel.Connectors.AzureOpenAI;
 using Microsoft.SemanticKernel.Embeddings;
+using Azure.Identity;
+using Azure.Storage.Blobs;
 
 #pragma warning disable SKEXP0010
 #pragma warning disable SKEXP0001
@@ -55,6 +57,11 @@ KernelPlugin memory = kernel.ImportPluginFromObject(memoryPlugin);
 builder.Services.AddSingleton<KernelPlugin>(memory);
 
 builder.Services.AddSingleton<ChatAgent>();
+
+var blobServiceClient = new BlobServiceClient(new Uri(builder.Configuration["AzureStorageConnectionString"]), new DefaultAzureCredential());
+var containerClient = blobServiceClient.GetBlobContainerClient(builder.Configuration["AzureStorageContainerName"]);
+
+builder.Services.AddSingleton(containerClient);
 
 builder.Services.AddBlazorBootstrap();
 
