@@ -7,6 +7,7 @@ using Microsoft.SemanticKernel.Embeddings;
 using Microsoft.SemanticKernel.Memory;
 using Microsoft.SemanticKernel.Plugins.Memory;
 using StackExchange.Redis;
+using System.Data.Common;
 
 #pragma warning disable SKEXP0010
 #pragma warning disable SKEXP0001
@@ -19,10 +20,22 @@ public class ChatAgent(Kernel kernel, KernelPlugin memory, IChatCompletionServic
 {
     // private static ChatHistory history = new();
 
+    const string Deliminater = "_&_";
+    const string KeyPrefix = "ChatHistory_";
+
+
     public async Task<string> CompleteChat(string user, string userInput)
     {
-       
-        var history = new ChatHistory(); 
+        string chatHistoryKey = KeyPrefix + Deliminater + user;
+
+        var history = new ChatHistory();
+        //TODO: implement loading chat history from redis
+        List<string> chatHistory = await LoadChatHistoryAsync(chatHistoryKey);
+        foreach (var message in chatHistory)
+        {
+            var parts = message.Split(Deliminater);
+            history.AddMessage(new AuthorRole(parts[0]), parts[1]);
+        }
 
         if (userInput is not null)
         {
@@ -41,6 +54,9 @@ public class ChatAgent(Kernel kernel, KernelPlugin memory, IChatCompletionServic
 
             // User the result to augment the prompt
             history.AddUserMessage(userInput + searchResult.GetValue<string>());
+
+            // Save the user message to the chat history
+            await SaveChatMessageAsync(chatHistoryKey, "user" + Deliminater + userInput);
         }
 
         // Get response from the AI
@@ -48,6 +64,11 @@ public class ChatAgent(Kernel kernel, KernelPlugin memory, IChatCompletionServic
 
         // Add the message from the agent to the chat history
         history.AddMessage(result.Role, result.Content ?? string.Empty);
+
+        // Console.WriteLine("TestAuthorRole: " + result.Role.ToString());
+
+        // Save the agent message to the chat history
+        await SaveChatMessageAsync(chatHistoryKey, result.Role + Deliminater + result.Content);
 
 
         return result.ToString();
