@@ -78,7 +78,7 @@
         {
             tempMessage = messageInput;
             await hubConnection.SendAsync("SendMessage", userInput, messageInput);
-            await hubConnection.SendAsync("SendOpenaiMessage", tempMessage); // TODO: add spinning progress bar
+            await hubConnection.SendAsync("SendOpenaiMessage", userInput, tempMessage);
         }
     }
 

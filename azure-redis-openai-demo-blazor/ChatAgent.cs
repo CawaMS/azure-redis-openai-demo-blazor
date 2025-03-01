@@ -17,8 +17,9 @@ using StackExchange.Redis;
 
 public class ChatAgent(Kernel kernel, KernelPlugin memory, IChatCompletionService chatCompletionService, ITextEmbeddingGenerationService embeddingService,IConnectionMultiplexer connectionMultiplexer, IConfiguration config)
 {
+    // private static ChatHistory history = new();
 
-    public async Task<string> CompleteChat(string userInput)
+    public async Task<string> CompleteChat(string user, string userInput)
     {
        
         var history = new ChatHistory(); 
@@ -52,6 +53,36 @@ public class ChatAgent(Kernel kernel, KernelPlugin memory, IChatCompletionServic
         return result.ToString();
     }
 
+    public async Task SaveChatHistoryAsync(string key, List<string> history)
+    {
+        await SaveListAsync(key, history);
+    }
 
+    public async Task SaveChatMessageAsync(string key, string message)
+    {
+        var db = connectionMultiplexer.GetDatabase();
+        await db.ListRightPushAsync(key, message);
+    }
+
+    public async Task<List<string>> LoadChatHistoryAsync(string key)
+    {
+        return await LoadListAsync(key);
+    }
+
+    private async Task SaveListAsync(string key, List<string> list)
+    {
+        var db = connectionMultiplexer.GetDatabase();
+        foreach (var item in list)
+        {
+            await db.ListRightPushAsync(key, item);
+        }
+    }
+
+    private async Task<List<string>> LoadListAsync(string key)
+    {
+        var db = connectionMultiplexer.GetDatabase();
+        var redisList = await db.ListRangeAsync(key);
+        return redisList.Select(x => x.ToString()).ToList();
+    }
 
 }

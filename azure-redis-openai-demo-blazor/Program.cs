@@ -56,7 +56,9 @@ KernelPlugin memory = kernel.ImportPluginFromObject(memoryPlugin);
 //Add DI
 builder.Services.AddSingleton<KernelPlugin>(memory);
 
-builder.Services.AddSingleton<ChatAgent>();
+// builder.Services.AddSingleton<ChatAgent>();
+
+builder.Services.AddScoped<ChatAgent>();
 
 var blobServiceClient = new BlobServiceClient(new Uri(builder.Configuration["AzureStorageConnectionString"]), new DefaultAzureCredential());
 var containerClient = blobServiceClient.GetBlobContainerClient(builder.Configuration["AzureStorageContainerName"]);

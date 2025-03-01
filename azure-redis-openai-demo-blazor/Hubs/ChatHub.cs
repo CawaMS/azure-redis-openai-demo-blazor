@@ -9,9 +9,9 @@ public class ChatHub : Hub
         await Clients.Caller.SendAsync("ReceiveMessage", user, message);
     }
 
-    public async Task SendOpenaiMessage(string message, ChatAgent chatAgent)
+    public async Task SendOpenaiMessage(string user, string message, ChatAgent chatAgent)
     { 
-        string response = await chatAgent.CompleteChat(message);
+        string response = await chatAgent.CompleteChat(user, message);
         await Clients.Caller.SendAsync("ReceiveMessage", "AI Assistant", response);
     }
 }
