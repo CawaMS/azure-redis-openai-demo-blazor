@@ -48,6 +48,7 @@
     private string? messageInput;
     private string? tempMessage;
     bool showSpinner = false;
+    bool disableLoadHistory = false;
 
     protected override async Task OnInitializedAsync()
     {
@@ -59,6 +60,7 @@
         {
             var encodedMsg = $"{user}: {message}";
             messages.Add(encodedMsg);
+            disableLoadHistory = true;
             if (user != "AI Assistant")
             {
                 showSpinner = true;
@@ -80,6 +82,10 @@
             await hubConnection.SendAsync("SendMessage", userInput, messageInput);
             await hubConnection.SendAsync("SendOpenaiMessage", userInput, tempMessage);
         }
+    }
+
+    private async Task LoadHistory()
+    {
     }
 
     public bool IsConnected =>
