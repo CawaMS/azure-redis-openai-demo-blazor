@@ -11,6 +11,8 @@ using Microsoft.SemanticKernel.Connectors.AzureOpenAI;
 using Microsoft.SemanticKernel.Embeddings;
 using Azure.Identity;
 using Azure.Storage.Blobs;
+using Redis.OM;
+using Redis.OM.Vectorizers;
 
 #pragma warning disable SKEXP0010
 #pragma warning disable SKEXP0001
@@ -64,6 +66,12 @@ var blobServiceClient = new BlobServiceClient(new Uri(builder.Configuration["Azu
 var containerClient = blobServiceClient.GetBlobContainerClient(builder.Configuration["AzureStorageContainerName"]);
 
 builder.Services.AddSingleton(containerClient);
+
+var semanticCacheProvider = new RedisConnectionProvider(builder.Configuration["SemanticCacheAzureProvider"]);
+var semanticCache = semanticCacheProvider.AzureOpenAISemanticCache(builder.Configuration["AOAIapiKey"], builder.Configuration["AOAIResourceName"], builder.Configuration["AOAIEmbeddingDeploymentName"], 1536);
+
+builder.Services.AddSingleton(semanticCache);
+
 
 builder.Services.AddBlazorBootstrap();
 

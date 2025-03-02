@@ -8,6 +8,7 @@ using Microsoft.SemanticKernel.Memory;
 using Microsoft.SemanticKernel.Plugins.Memory;
 using StackExchange.Redis;
 using System.Data.Common;
+using Redis.OM.Contracts;
 
 #pragma warning disable SKEXP0010
 #pragma warning disable SKEXP0001
@@ -16,7 +17,7 @@ using System.Data.Common;
 #pragma warning disable SKEXP0052
 #pragma warning disable SKEXP0050
 
-public class ChatAgent(Kernel kernel, KernelPlugin memory, IChatCompletionService chatCompletionService, ITextEmbeddingGenerationService embeddingService,IConnectionMultiplexer connectionMultiplexer, IConfiguration config)
+public class ChatAgent(Kernel kernel, KernelPlugin memory, IChatCompletionService chatCompletionService, ITextEmbeddingGenerationService embeddingService,IConnectionMultiplexer connectionMultiplexer,ISemanticCache semanticCache, IConfiguration config)
 {
     // private static ChatHistory history = new();
 
@@ -39,6 +40,15 @@ public class ChatAgent(Kernel kernel, KernelPlugin memory, IChatCompletionServic
 
         if (userInput is not null)
         {
+            //Try to retrieve from semantic caching store
+            if(semanticCache.GetSimilar(userInput).Length > 0)
+            {
+                var chatResponse = semanticCache.GetSimilar(userInput)[0];
+                return chatResponse;
+            }
+
+            // System.Threading.Thread.Sleep(10000);
+
             // Retrieve a memory with the Kernel.
             FunctionResult searchResult = await kernel.InvokeAsync(
                 memory["Recall"],
@@ -60,7 +70,9 @@ public class ChatAgent(Kernel kernel, KernelPlugin memory, IChatCompletionServic
         }
 
         // Get response from the AI
-        ChatMessageContent result = await chatCompletionService.GetChatMessageContentAsync(history, kernel: kernel);
+        ChatMessageContent result = chatCompletionService.GetChatMessageContentAsync(history, kernel: kernel).Result;
+
+        // System.Threading.Thread.Sleep(10000);
 
         // Add the message from the agent to the chat history
         history.AddMessage(result.Role, result.Content ?? string.Empty);
@@ -70,6 +82,7 @@ public class ChatAgent(Kernel kernel, KernelPlugin memory, IChatCompletionServic
         // Save the agent message to the chat history
         await SaveChatMessageAsync(chatHistoryKey, result.Role + Deliminater + result.Content);
 
+        await semanticCache.StoreAsync(userInput, result.ToString());
 
         return result.ToString();
     }

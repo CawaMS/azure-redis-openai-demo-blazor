@@ -13,6 +13,8 @@
     <ProjectReference Include="..\azure-redis-openai-demo-blazor.Client\azure-redis-openai-demo-blazor.Client.csproj" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="9.0.2" />
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="9.0.2" />
+    <PackageReference Include="Redis.OM" Version="0.7.6" />
+    <PackageReference Include="Redis.OM.Vectorizers" Version="0.7.6" />
   </ItemGroup>
 
 </Project>
